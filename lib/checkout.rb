@@ -1,6 +1,6 @@
 class Checkout
-  attr_reader :prices
-  private :prices
+  attr_reader :scan, :basket, :total, :prices
+  private :basket
 
   def initialize(prices)
     @prices = prices
@@ -12,7 +12,6 @@ class Checkout
 
   def total
     total = 0
-
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       if item == :apple || item == :pear
         if (count % 2 == 0)
