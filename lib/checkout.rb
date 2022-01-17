@@ -13,8 +13,6 @@ class Checkout
   def total
     total = 0
 
-    prices.each {|key, value| scan(key)}
-
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       if item == :apple || item == :pear
         if (count % 2 == 0)
@@ -29,12 +27,16 @@ class Checkout
         else
           total += (@prices.fetch(item) / 2) * count
         end
+      elsif item == :mango
+          print((prices.fetch(item) * count * 0.75).to_i)
+          total += (prices.fetch(item) * count * 0.75).to_i
       else
         total += @prices.fetch(item) * count
       end
     end
 
-    total
+  return total
+
   end
 
   private
