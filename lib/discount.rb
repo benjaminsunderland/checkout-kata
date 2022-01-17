@@ -8,7 +8,11 @@ class Discount
     end
 
     def apple_pear_discount(item, count)
-       @prices.fetch(item) * (count / 2)
+        if (count % 2 == 0)
+            @prices.fetch(item) * (count / 2)
+          else
+            @prices.fetch(item) * count
+        end
     end
 
     def pineapple_discount(item, count)

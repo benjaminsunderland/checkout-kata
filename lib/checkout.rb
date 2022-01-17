@@ -18,10 +18,10 @@ class Checkout
 
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       case item
-      when :pear
-        return total += @discount.apple_pear_discount(item, count) if (count % 2 == 0)
+      when :pear 
+        return total += @discount.apple_pear_discount(item, count)
       when :apple
-        return total += @discount.apple_pear_discount(item, count) if (count % 2 == 0)
+        return total += @discount.apple_pear_discount(item, count)
       when :banana
         return total += @discount.banana_discount(item, count)
       when :pineapple
