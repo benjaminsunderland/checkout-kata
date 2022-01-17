@@ -1,37 +1,38 @@
+require 'discount'
+
 class Checkout
   attr_reader :scan, :basket, :total, :prices
   private :basket
 
   def initialize(prices)
     @prices = prices
+    @discount = Discount.new(@prices, total=0)
   end
 
   def scan(item)
     basket << item.to_sym
   end
 
-  def total
-    total = 0
+  def total         
+    total = 0        
 
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       if item == :apple || item == :pear
         if (count % 2 == 0)
-          total += @prices.fetch(item) * (count / 2)
+          @discount.apple_pear_discount(item)
         else
-          total += @prices.fetch(item) * count
+          @discount.base_price(item)
         end
       elsif item == :banana || item == :pineapple
         if item == :pineapple
-          total += (@prices.fetch(item) / 2)
-          total += (@prices.fetch(item)) * (count - 1)
+          @discount.pineapple_discount(item)
         else
-          total += (@prices.fetch(item) / 2) * count
+          @discount.banana_discount(item)
         end
       elsif item == :mango
-          print((prices.fetch(item) * count * 0.75).to_i)
-          total += (prices.fetch(item) * count * 0.75).to_i
+        @discount.mango_discount(item)
       else
-        total += @prices.fetch(item) * count
+        @discount.base_price(item)
       end
     end
 
