@@ -6,7 +6,7 @@ class Checkout
 
   def initialize(prices)
     @prices = prices
-    @discount = Discount.new(@prices, total=0)
+    @discount = Discount.new(@prices)
   end
 
   def scan(item)
@@ -17,27 +17,21 @@ class Checkout
     total = 0        
 
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
-      if item == :apple || item == :pear
-        if (count % 2 == 0)
-          @discount.apple_pear_discount(item)
-        else
-          @discount.base_price(item)
-        end
-      elsif item == :banana || item == :pineapple
-        if item == :pineapple
-          @discount.pineapple_discount(item)
-        else
-          @discount.banana_discount(item)
-        end
-      elsif item == :mango
-        @discount.mango_discount(item)
+      case item
+      when :pear
+        return total += @discount.apple_pear_discount(item, count) if (count % 2 == 0)
+      when :apple
+        return total += @discount.apple_pear_discount(item, count) if (count % 2 == 0)
+      when :banana
+        return total += @discount.banana_discount(item, count)
+      when :pineapple
+        return total += @discount.pineapple_discount(item, count)
+      when :mango
+        return total += @discount.mango_discount(item, count)
       else
-        @discount.base_price(item)
+        return total += @discount.base_price(item, count)
       end
     end
-
-  return total
-
   end
 
   private
