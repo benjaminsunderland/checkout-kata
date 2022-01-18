@@ -1,7 +1,7 @@
 require 'discount'
 
 class Checkout
-  attr_reader :basket
+  attr_reader :basket, :prices
   private :basket
 
   def initialize(prices)
@@ -18,7 +18,7 @@ class Checkout
 
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       case item
-      when :pear   attr_reader :basket
+      when :pear   
         total += @discount.apple_pear_discount(item, count)
       when :apple
         total += @discount.apple_pear_discount(item, count)

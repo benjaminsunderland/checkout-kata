@@ -1,31 +1,35 @@
 class Discount
 
-    def initialize(item_prices)
+   def initialize(item_prices)
        @item_prices = item_prices
-    end
+   end
 
-    def apple_pear_discount(item, count)
-        if (count % 2 == 0)
-            @item_prices.fetch(item) * (count / 2)
-          else
-            @item_prices.fetch(item) * count
-        end
-    end
+   def apple_pear_discount(item, count)
+      if (count % 2 == 0)
+         @item_prices.fetch(item) * (count / 2)
+      else
+         @item_prices.fetch(item) * count
+      end
+   end
 
-    def pineapple_discount(item, count)
-      @item_prices.fetch(item) + @item_prices.fetch(item) / 2 if count == 2
-    end
+   def pineapple_discount(item, count)
+      if count == 2
+         @item_prices.fetch(item) + @item_prices.fetch(item) / 2
+      else
+         @item_prices.fetch(item) * count
+      end
+   end
 
-    def banana_discount(item, count)
-       (@item_prices.fetch(item) / 2) * count
-    end
+   def banana_discount(item, count)
+      (@item_prices.fetch(item) / 2) * count
+   end
 
-    def mango_discount(item, count)
-       (@item_prices.fetch(item) * count * 0.75).to_i
-    end
+   def mango_discount(item, count)
+      (@item_prices.fetch(item) * count * 0.75).to_i
+   end
 
-    def base_price(item, count)
-       @item_prices.fetch(item) * count
-    end
+   def base_price(item, count)
+      @item_prices.fetch(item) * count
+   end
 
   end
