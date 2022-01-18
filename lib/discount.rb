@@ -1,8 +1,5 @@
 class Discount
 
-    attr_reader :prices
-    attr_writer :total
-
     def initialize(item_prices)
        @item_prices = item_prices
     end
@@ -16,7 +13,7 @@ class Discount
     end
 
     def pineapple_discount(item, count)
-       (@item_prices.fetch(item)) * (count - 1)
+      @item_prices.fetch(item) + @item_prices.fetch(item) / 2 if count == 2
     end
 
     def banana_discount(item, count)

@@ -1,7 +1,7 @@
 require 'discount'
 
 class Checkout
-  attr_reader :scan, :basket, :total, :prices
+  attr_reader :basket
   private :basket
 
   def initialize(prices)
@@ -18,20 +18,22 @@ class Checkout
 
     basket.inject(Hash.new(0)) { |items, item| items[item] += 1; items }.each do |item, count|
       case item
-      when :pear 
-        return total += @discount.apple_pear_discount(item, count)
+      when :pear   attr_reader :basket
+        total += @discount.apple_pear_discount(item, count)
       when :apple
-        return total += @discount.apple_pear_discount(item, count)
+        total += @discount.apple_pear_discount(item, count)
       when :banana
-        return total += @discount.banana_discount(item, count)
+        total += @discount.banana_discount(item, count)
       when :pineapple
-        return total += @discount.pineapple_discount(item, count)
+        total += @discount.pineapple_discount(item, count)       
       when :mango
-        return total += @discount.mango_discount(item, count)
+        total += @discount.mango_discount(item, count)
       else
-        return total += @discount.base_price(item, count)
+        total += @discount.base_price(item, count)
       end
     end
+
+    return total
   end
 
   private
